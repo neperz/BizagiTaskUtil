@@ -16,10 +16,10 @@ namespace BizagiServicesClient
         {
             var ps = new Processes();
             var cli = new BZ.WorkflowEngineSOASoapClient();
-            string caseFilter = "<BizAgiWSParam>" +
-           // "<userName>"+ user + "</userName>" +
-            "<radNumber>"+ caseNumber + "</radNumber>" +
-            "</BizAgiWSParam>";
+            string caseFilter = "<BizAgiWSParam>";
+            if (!string.IsNullOrEmpty(caseNumber))
+                caseFilter += "<radNumber>" + caseNumber + "</radNumber>";
+            caseFilter += "</BizAgiWSParam>";
             var xmlInfo = cli.getCasesAsString(caseFilter);
 
             var serializer = new XmlSerializer(typeof(Processes));

@@ -36,6 +36,7 @@
             this.lblType = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.pgWorkItem = new System.Windows.Forms.PropertyGrid();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtCaso
@@ -111,11 +112,23 @@
             this.pgWorkItem.Size = new System.Drawing.Size(408, 620);
             this.pgWorkItem.TabIndex = 9;
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.Control;
+            this.button2.Location = new System.Drawing.Point(12, 174);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(181, 23);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Exportar casos";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 647);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.pgWorkItem);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblType);
@@ -142,6 +155,7 @@
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PropertyGrid pgWorkItem;
+        private System.Windows.Forms.Button button2;
     }
 }
 
