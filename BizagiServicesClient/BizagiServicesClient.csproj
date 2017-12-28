@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="ActivitiDone.cs" />
     <Compile Include="CaseInfo.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Servico.cs" />
     <Compile Include="Connected Services\BZ\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
