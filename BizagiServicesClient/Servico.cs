@@ -16,7 +16,9 @@ namespace BizagiServicesClient
         {
             var ps = new Processes();
             var cli = new BZ.WorkflowEngineSOASoapClient();
-            string caseFilter = "<BizAgiWSParam>";
+            string caseFilter = "<BizAgiWSParam>";// +
+            //"<domain>compline.com.br</domain>" +
+            //"<userName>SOA</userName>";
             if (!string.IsNullOrEmpty(caseNumber))
                 caseFilter += "<radNumber>" + caseNumber + "</radNumber>";
             caseFilter += "</BizAgiWSParam>";

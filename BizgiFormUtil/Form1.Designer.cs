@@ -37,6 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pgWorkItem = new System.Windows.Forms.PropertyGrid();
             this.button2 = new System.Windows.Forms.Button();
+            this.cmbProcessos = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCaso
@@ -69,7 +71,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 71);
+            this.label2.Location = new System.Drawing.Point(9, 152);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 13);
             this.label2.TabIndex = 3;
@@ -78,7 +80,7 @@
             // btnAply
             // 
             this.btnAply.BackColor = System.Drawing.SystemColors.Control;
-            this.btnAply.Location = new System.Drawing.Point(12, 121);
+            this.btnAply.Location = new System.Drawing.Point(12, 191);
             this.btnAply.Name = "btnAply";
             this.btnAply.Size = new System.Drawing.Size(181, 23);
             this.btnAply.TabIndex = 5;
@@ -89,7 +91,7 @@
             // lblType
             // 
             this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(12, 84);
+            this.lblType.Location = new System.Drawing.Point(12, 165);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(57, 13);
             this.lblType.TabIndex = 7;
@@ -109,13 +111,13 @@
             this.pgWorkItem.HelpVisible = false;
             this.pgWorkItem.Location = new System.Drawing.Point(232, 21);
             this.pgWorkItem.Name = "pgWorkItem";
-            this.pgWorkItem.Size = new System.Drawing.Size(408, 620);
+            this.pgWorkItem.Size = new System.Drawing.Size(689, 620);
             this.pgWorkItem.TabIndex = 9;
             // 
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.Control;
-            this.button2.Location = new System.Drawing.Point(12, 174);
+            this.button2.Location = new System.Drawing.Point(12, 220);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(181, 23);
             this.button2.TabIndex = 10;
@@ -123,11 +125,31 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // cmbProcessos
+            // 
+            this.cmbProcessos.FormattingEnabled = true;
+            this.cmbProcessos.Location = new System.Drawing.Point(15, 85);
+            this.cmbProcessos.Name = "cmbProcessos";
+            this.cmbProcessos.Size = new System.Drawing.Size(178, 21);
+            this.cmbProcessos.TabIndex = 11;
+            this.cmbProcessos.SelectedIndexChanged += new System.EventHandler(this.cmbProcessos_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Processos";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(646, 647);
+            this.ClientSize = new System.Drawing.Size(933, 648);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cmbProcessos);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pgWorkItem);
             this.Controls.Add(this.label3);
@@ -137,7 +159,6 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtCaso);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Bizagi Util";
             this.ResumeLayout(false);
@@ -156,6 +177,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PropertyGrid pgWorkItem;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox cmbProcessos;
+        private System.Windows.Forms.Label label4;
     }
 }
 

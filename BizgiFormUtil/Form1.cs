@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml;
+﻿using BizagiServicesClient;
+using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
@@ -33,27 +34,24 @@ namespace BizgiFormUtil
             try
             {
 
-           
-            var bc = new BizagiServicesClient.Servico();
 
-            this.pCaseNumber = txtCaso.Text;
-            
-            var x = bc.GetCaseInfo(pCaseNumber);
-            this.pCaseID = x.Process[0].ProcessId;
+                var bc = new BizagiServicesClient.Servico();
 
-            this.pTkName = x.Process[0].CurrentWorkItems.WorkItem.Task.TaskName;
-            this.pTkID = x.Process[0].CurrentWorkItems.WorkItem.Task.TaskId;
-            this.pTTksType = x.Process[0].CurrentWorkItems.WorkItem.Task.TaskType;
-            //lbTarefa.Text = string.Format("ID Caso: {0}, tName: {1}, tID: {2}", pCaseID, pTkName, pTkID);
-            lblType.Text = this.pTTksType;
-                var curTask = x.Process[0].CurrentWorkItems.WorkItem.Task;
-                curTask.workItemId = x.Process[0].CurrentWorkItems.WorkItem.WorkItemId;
-                curTask.workItemState = x.Process[0].CurrentWorkItems.WorkItem.WorkItemState;
-                curTask.workItemEntryDate = x.Process[0].CurrentWorkItems.WorkItem.WorkItemEntryDate;
-                curTask.workItemDuration = x.Process[0].CurrentWorkItems.WorkItem.WorkItemDuration;
-                curTask.workItemEstimatedSolutionDate = x.Process[0].CurrentWorkItems.WorkItem.WorkItemEstimatedSolutionDate;
-                pgWorkItem.SelectedObject = curTask;
-                
+                this.pCaseNumber = txtCaso.Text;
+                cmbProcessos.Items.Clear();
+                var x = bc.GetCaseInfo(pCaseNumber);
+                this.pCaseID = x.Process[0].ProcessId;
+                foreach (var p in x.Process)
+                {
+                    var cbItem = new ComboBoxProcessoItem();
+                    cbItem.Value = p.ProcessId;
+                    cbItem.Name = p.ProcessWorkflowClass.WorkflowClassDisplayName;
+                    cbItem.Tag = p;                    
+                    cmbProcessos.Items.Add(cbItem);
+                }
+
+                ViweProcess(x.Process[0]);
+
             }
             catch (Exception ex)
             {
@@ -61,6 +59,23 @@ namespace BizgiFormUtil
                 MessageBox.Show(ex.ToString());
             }
             Cursor.Current = Cursors.Default;
+        }
+
+        private void ViweProcess(BizagiServicesClient.Process process)
+        {
+          
+            this.pTkName = process.CurrentWorkItems.WorkItem.Task.TaskName;
+            this.pTkID = process.CurrentWorkItems.WorkItem.Task.TaskId;
+            this.pTTksType = process.CurrentWorkItems.WorkItem.Task.TaskType;
+            //lbTarefa.Text = string.Format("ID Caso: {0}, tName: {1}, tID: {2}", pCaseID, pTkName, pTkID);
+            lblType.Text = this.pTTksType;
+            var curTask = process.CurrentWorkItems.WorkItem.Task;
+            curTask.workItemId = process.CurrentWorkItems.WorkItem.WorkItemId;
+            curTask.workItemState = process.CurrentWorkItems.WorkItem.WorkItemState;
+            curTask.workItemEntryDate = process.CurrentWorkItems.WorkItem.WorkItemEntryDate;
+            curTask.workItemDuration = process.CurrentWorkItems.WorkItem.WorkItemDuration;
+            curTask.workItemEstimatedSolutionDate = process.CurrentWorkItems.WorkItem.WorkItemEstimatedSolutionDate;
+            pgWorkItem.SelectedObject = curTask;
         }
 
         private void btnAply_Click(object sender, EventArgs e)
@@ -142,7 +157,7 @@ namespace BizgiFormUtil
                     pck.SaveAs(fi);
                     System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(excelFile);
                     psi.UseShellExecute = true;
-                    Process.Start(psi);
+                    System.Diagnostics.Process.Start(psi);
                 }
             }
             catch (Exception ex)
@@ -151,6 +166,13 @@ namespace BizgiFormUtil
                 MessageBox.Show(ex.ToString());
             }
             Cursor.Current = Cursors.Default;
+        }
+
+        private void cmbProcessos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var sel = cmbProcessos.SelectedItem;
+            var obj = (ComboBoxProcessoItem)sel;
+            ViweProcess(obj.Tag);
         }
     }
 }

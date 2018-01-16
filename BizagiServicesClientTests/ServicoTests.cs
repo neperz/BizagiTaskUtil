@@ -19,10 +19,10 @@ namespace BizagiServicesClient.Tests
             var pCaseNumber = "OUV467-2017";
            
             var x = bc.GetCaseInfo(pCaseNumber);
-            var pCaseID = x.Process.ProcessId;
+            var pCaseID = x.Process[0].ProcessId;
             
-            var pTkName = x.Process.CurrentWorkItems.WorkItem.Task.TaskName;
-            var pTkID = x.Process.CurrentWorkItems.WorkItem.Task.TaskId;
+            var pTkName = x.Process[0].CurrentWorkItems.WorkItem.Task.TaskName;
+            var pTkID = x.Process[0].CurrentWorkItems.WorkItem.Task.TaskId;
 
             var pd = bc.PerformActivity(pCaseNumber, pTkName, pCaseID, pTkID);
             Console.Write(x);
