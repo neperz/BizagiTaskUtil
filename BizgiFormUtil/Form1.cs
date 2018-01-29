@@ -174,5 +174,101 @@ namespace BizgiFormUtil
             var obj = (ComboBoxProcessoItem)sel;
             ViweProcess(obj.Tag);
         }
+
+        private object GetSkills(Skills skills)
+        {
+            var regras = "";
+            if (skills != null)
+                foreach (var r in skills.SKILL)
+                {
+                    regras += r.SkillDisplayName + ";";
+                }
+            return regras;
+        }
+
+        private string GetArea(IdArea idArea)
+        {
+            string area = "";
+            if (idArea != null)
+                area = idArea.AreaDisplayName;
+
+            return area;
+        }
+
+        private string GetPositionsInline(Positions positions)
+        {
+            var regras = "";
+            if (positions != null)
+                foreach (var r in positions.ORGPOSITION)
+                {
+                    regras += r.PosDisplayName + ";";
+                }
+            return regras;
+        }
+
+        private string GetRolesInLine(Roles roles)
+        {
+            var regras = "";
+            if (roles != null)
+                foreach (var r in roles.ROLE)
+                {
+                    regras += r.RoleDisplayName + ";";
+                }
+            return regras;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+
+                var bc = new BizagiServicesClient.Servico();
+                
+                //var processos = data.Process;
+
+
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                saveFileDialog1.Filter = "Planilha Excel|*.xlsx";
+                saveFileDialog1.Title = "Exportar";
+                saveFileDialog1.ShowDialog();
+                if (saveFileDialog1.FileName != "")
+                {
+                    var xmlFile = saveFileDialog1.FileName.Replace(".xlsx", ".xml");
+                    var usuarios = bc.GetUsuarios(xmlFile);
+
+                    ExcelPackage pck = new ExcelPackage();
+                    var lista = from u in usuarios
+                                select new
+                                {
+                                    enabled = u.Enabled,
+                                    userName = u.UserName,
+                                    fullName = u.FullName,
+                                    contactEmail = u.ContactEmail,
+                                    roles = GetRolesInLine(u.Roles),
+                                    skiils = GetSkills(u.Skills),
+                                    positions = GetPositionsInline(u.Positions),
+                                    area = GetArea(u.IdArea),
+
+                                };
+                    var wsDt = pck.Workbook.Worksheets.Add("Usuarios");
+                    wsDt.Cells["A1"].LoadFromCollection(lista, true, TableStyles.Medium9);
+
+                    wsDt.Cells[wsDt.Dimension.Address].AutoFitColumns();
+                    var fi = new FileInfo(saveFileDialog1.FileName);
+                    if (fi.Exists)
+                        fi.Delete();
+                    pck.SaveAs(fi);
+                    System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(saveFileDialog1.FileName);
+                    psi.UseShellExecute = true;
+                    System.Diagnostics.Process.Start(psi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show(ex.ToString());
+            }
+            Cursor.Current = Cursors.Default;
+        }
     }
 }

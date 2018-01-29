@@ -34,6 +34,31 @@ namespace BizagiServicesClient
             return ps;
         }
 
+        public List<WFUSER> GetUsuarios(string outFile)
+        {
+            var client = new BzEntity.EntityManagerSOASoapClient();
+            BizAgiWSResponse pData = new BizAgiWSResponse();
+
+            var xmlRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?><BizAgiWSParam>" +
+                     "<EntityData><EntityName>WFUSER</EntityName>" +
+                     //"<Filters><![CDATA[idArea = '" + idArea + "']]></Filters>" +
+                     "</EntityData></BizAgiWSParam>";
+
+            var data = client.getEntitiesAsString(xmlRequest);
+//            var dataFile = @"D:\Projetos\PrevSulUtil\PrevSulProverManager.Domain\BizagiPrevSul.Domain\BizagiUsersBackupProducao_25012018_1555.xml";
+            File.WriteAllText(outFile, data);
+
+            var serializer = new XmlSerializer(typeof(BizAgiWSResponse));
+
+
+            using (TextReader reader = new StringReader(data))
+            {
+                pData = (BizAgiWSResponse)serializer.Deserialize(reader);
+            }
+            return pData.Entities.WFUSER;
+
+        }
+
         public Processes GetCaseInfoByID(string idCase, string user)
         {
             var ps = new Processes();
